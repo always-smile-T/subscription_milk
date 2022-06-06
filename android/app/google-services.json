@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "442583590864",
+    "project_id": "subcription-milk",
+    "storage_bucket": "subcription-milk.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:442583590864:android:635c0bb4de6decede0bbd5",
+        "android_client_info": {
+          "package_name": "com.example.subscription_milk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "442583590864-2frjl37hm82tbm5s8lksmo60o77f9deu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.subscription_milk",
+            "certificate_hash": "02601d8362653bc073d1a08b7fc06591a0d4832e"
+          }
+        },
+        {
+          "client_id": "442583590864-lnn9eoe5i320p77sj6gpn0qqkr0ke9aj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUL2jswECaLXo2SmbtLYCyTiBRLGFld3Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "442583590864-lnn9eoe5i320p77sj6gpn0qqkr0ke9aj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
