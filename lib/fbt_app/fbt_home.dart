@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'main_function/fbt_account/account_page_screen.dart';
-import 'main_function/fbt_cart/cart_page_screen.dart';
 import 'main_function/fbt_home/home_page_screen.dart';
+import 'main_function/fbt_product/product_page_screen.dart';
 import 'main_function/fbt_subcription/subcriptin_page_screen.dart';
 import 'model/bottom_bar_view.dart';
 import 'model/tab_icon_data.dart';
@@ -99,8 +99,7 @@ class _FBTAppHomeScreenState extends State<FBTAppHomeScreen>
                   return;
                 }
                 setState(() {
-                  tabBody =
-                      CartScreen(animationController: animationController);
+                  tabBody = const ProductScreen();
                 });
               });
             } else if (index == 2) {

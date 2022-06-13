@@ -1,13 +1,10 @@
-import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:subscription_milk/fbt_app/app_theme.dart';
 import 'package:subscription_milk/fbt_app/blocs/login_bloc.dart';
-import 'package:subscription_milk/fbt_app/fbt_home.dart';
 import 'package:subscription_milk/fbt_app/provider/google_sign_in.dart';
 
 class SignUpPage extends StatefulWidget {

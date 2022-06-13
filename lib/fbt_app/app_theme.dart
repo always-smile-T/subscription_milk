@@ -13,4 +13,7 @@ class AppTheme {
   static const Color yellowMonth = Color(0xFFFBCD2C);
   static const Color redDiamond = Color(0xFFE23C3C);
   static const Color grey = Color(0xFFC4C4C4);
+  static const Color blue5 = Color(0xFF87D5FC);
+
+
 }

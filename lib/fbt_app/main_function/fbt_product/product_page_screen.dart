@@ -1,62 +1,25 @@
-import 'package:flutter_svg/flutter_svg.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:subscription_milk/fbt_app/main_function/fbt_product/product_page_screen.dart';
-
+import 'package:subscription_milk/fbt_app/main_function/fbt_home/milk_detail.dart';
 import '../../app_theme.dart';
-import 'milk_detail.dart';
 
-class HomePageScreen extends StatefulWidget {
-  const HomePageScreen({Key? key, this.animationController}) : super(key: key);
+class ProductScreen extends StatefulWidget {
+  const ProductScreen({Key? key, this.animationController}) : super(key: key);
 
   final AnimationController? animationController;
 
   @override
-  _HomePageScreenState createState() => _HomePageScreenState();
+  _ProductScreenState createState() => _ProductScreenState();
 }
 
-class _HomePageScreenState extends State<HomePageScreen>
+class _ProductScreenState extends State<ProductScreen>
     with TickerProviderStateMixin {
-  String? idFolder = "";
   String? search = "";
-  Animation<double>? topBarAnimation;
-  final ScrollController _scrollController = ScrollController();
-  final List<Widget> _post = <Widget>[];
-  bool _setState = true;
-  List<Widget> listViews = <Widget>[];
-  final ScrollController scrollController = ScrollController();
-  double topBarOpacity = 0.0;
   late TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
-    topBarAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-        CurvedAnimation(
-            parent: widget.animationController!,
-            curve: const Interval(0, 0.5, curve: Curves.fastOutSlowIn)));
-
-    scrollController.addListener(() {
-      if (scrollController.offset >= 24) {
-        if (topBarOpacity != 1.0) {
-          setState(() {
-            topBarOpacity = 1.0;
-          });
-        }
-      } else if (scrollController.offset <= 24 &&
-          scrollController.offset >= 0) {
-        if (topBarOpacity != scrollController.offset / 24) {
-          setState(() {
-            topBarOpacity = scrollController.offset / 24;
-          });
-        }
-      } else if (scrollController.offset <= 0) {
-        if (topBarOpacity != 0.0) {
-          setState(() {
-            topBarOpacity = 0.0;
-          });
-        }
-      }
-    });
     super.initState();
   }
 
@@ -83,7 +46,7 @@ class _HomePageScreenState extends State<HomePageScreen>
       backgroundColor: AppTheme.bluePrimary,
       body: ListView(
         children: <Widget>[
-          const SizedBox(height: 120.0),
+          const SizedBox(height: 100.0),
           Container(
               padding: const EdgeInsets.only(right: 15.0, left: 15.0),
               width: MediaQuery.of(context).size.width - 30.0,
@@ -95,17 +58,25 @@ class _HomePageScreenState extends State<HomePageScreen>
                 mainAxisSpacing: 15.0,
                 childAspectRatio: 0.8,
                 children: <Widget>[
-                  _buildCard('Nut Milk', 'assets/images/milk1.png',
+                  _buildCard('Nut Milk', 'package 1' , '\$3.99', 'assets/images/milk1.png',
                       false, context),
-                  _buildCard('Butter Milk',
+                  _buildCard('Nut Milk', 'package 2' , '\$6.99', 'assets/images/milk1.png',
+                      false, context),
+                  _buildCard('Butter Milk', 'package 1' , '\$5.99' ,
                       'assets/images/milk-buy.png', false, context),
-                  _buildCard('Paneer',
+                  _buildCard('Butter Milk', 'package 2' , '\$8.99' ,
+                      'assets/images/milk-buy.png', false, context),
+                  _buildCard('Paneer', 'package 1' , '\$10.99' ,
                       'assets/images/paneer.png', true, context),
-                  _buildCard('Cream',
+                  _buildCard('Paneer', 'package 2' , '\$13.99' ,
+                      'assets/images/paneer.png', true, context),
+                  _buildCard('Cream', 'package 1' , '\$22.99' ,
+                      'assets/images/cream.png', false, context),
+                  _buildCard('Cream', 'package 2' , '\$25.99' ,
                       'assets/images/cream.png', false, context)
                 ],
               )),
-          const SizedBox(height: 15.0)
+          const SizedBox(height: 70.0)
         ],
       ),
     );
@@ -162,28 +133,28 @@ class _HomePageScreenState extends State<HomePageScreen>
     );
   }
 
-  Widget _buildCard(String name, String imgPath,
+  Widget _buildCard(String name, String package, String price, String imgPath,
       bool isFavorite, context) {
     return Padding(
         padding:
-            const EdgeInsets.only(top: 5.0, bottom: 5.0, left: 5.0, right: 5.0),
+        const EdgeInsets.only(top: 5.0, bottom: 5.0, left: 5.0, right: 5.0),
         child: InkWell(
-          onTap: (){
-            Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                    const ProductScreen()),
-                    (route) => false);
-          },
-           /* onTap: () {
+            onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => CookieDetail(
                       assetPath: imgPath,
-                      cookiename: name)));
-            },*/
+                      milkName: name,
+                    milkPrice: price,
+                  milkPackage: package,)));
+            },
             child: Container(
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15.0),
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                        topRight: Radius.circular(60),
+                        bottomLeft: Radius.circular(15),
+                        bottomRight: Radius.circular(15)
+                ),
                     boxShadow: [
                       BoxShadow(
                           color: Colors.grey.withOpacity(0.2),
@@ -207,21 +178,29 @@ class _HomePageScreenState extends State<HomePageScreen>
                           color: Color(0xFF575E67),
                           fontFamily: 'Varela',
                           fontSize: 14.0)),
+                  Text(package,
+                      style: const TextStyle(
+                          color: Color(0xFF575E67),
+                          fontFamily: 'Varela',
+                          fontSize: 12.0)),
+                  Text(price,
+                      style: const TextStyle(
+                          color: Color(0xFFCC8053),
+                          fontFamily: 'Varela',
+                          fontSize: 14.0)),
                   Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(4.0),
                       child: Container(color:const Color(0xFFEBEBEB), height: 1.0)),
                   Padding(
                       padding: const EdgeInsets.only(left: 5.0, right: 5.0, top: 10.0),
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: const [
-                               Icon(Icons.shopping_basket,
-                                  color: Color(0xFFD17E50), size: 12.0),
-                               Text('View Subscription',
-                                  style: TextStyle(
-                                      fontFamily: 'Varela',
-                                      color: Color(0xFFD17E50),
-                                      fontSize: 12.0))
+                            Text('SUBSCRIBE',
+                                style: TextStyle(
+                                    fontFamily: 'Varela',
+                                    color: AppTheme.bluePrimary,
+                                    fontSize: 12.0))
                           ]))
                 ]))));
   }

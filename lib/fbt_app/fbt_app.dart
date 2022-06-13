@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       create: (context) => GoogleSignInProvider(),
           child: MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: "/login" ,
+      initialRoute: "/home" ,
       routes: <String, WidgetBuilder>{
         "/home": (BuildContext context) => const FBTAppHomeScreen(),
         "/login": (BuildContext context) => const LoginPage(),
