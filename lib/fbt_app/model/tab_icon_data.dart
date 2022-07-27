@@ -4,6 +4,7 @@ class TabIconData {
   TabIconData({
     this.imagePath = '',
     this.index = 0,
+
     this.selectedImagePath = '',
     this.isSelected = false,
     this.animationController,

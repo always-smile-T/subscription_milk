@@ -311,7 +311,7 @@ class _TabIconsState extends State<TabIcons> with TickerProviderStateMixin {
                       width: 6,
                       height: 6,
                       decoration: const BoxDecoration(
-                        color: AppTheme.blue2,
+                        color: AppTheme.blueIcon,
                         shape: BoxShape.circle,
                       ),
                     ),

@@ -7,10 +7,10 @@ import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:subscription_milk/fbt_app/app_theme.dart';
+import 'package:subscription_milk/fbt_app/authenticate/register/register.dart';
 import 'package:subscription_milk/fbt_app/blocs/login_bloc.dart';
 import 'package:subscription_milk/fbt_app/fbt_home.dart';
 import 'package:subscription_milk/fbt_app/provider/google_sign_in.dart';
-
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -22,21 +22,13 @@ class _LoginPageState extends State<LoginPage> {
   LoginBloc bloc = LoginBloc();
 
   bool _showPass = false;
+  late bool correct;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
 
   @override
   void initState() => super.initState();
 
-  /*void checkLogin() async{
-    //thu cai nay di
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    String? val = pref.getString("login");
-    if(val != null) {
-      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: gotoDashboard), (route) => false);
-      Navigator.push(context, MaterialPageRoute(builder: gotoDashboard));
-    }
-  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -59,8 +51,10 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       IconButton(
-                          onPressed: () {},
-                          icon: Image.asset("assets/images/back.png")),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          icon: Icon(Icons.arrow_back_ios_rounded, color: AppTheme.blueIcon,)),
                       Center(
                         child: Stack(
                           children: <Widget>[
@@ -108,9 +102,9 @@ class _LoginPageState extends State<LoginPage> {
                     child: StreamBuilder(
                         stream: bloc.emailStream,
                         builder: (context, snapshot) => TextField(
-                          cursorColor: AppTheme.blue2,
+                          cursorColor: AppTheme.blueIcon,
                           style: const TextStyle(
-                              fontSize: 18, color: AppTheme.blue2),
+                              fontSize: 18, color: AppTheme.blueIcon),
                           controller: _emailController,
                           decoration: InputDecoration(
                               labelText: "USERNAME",
@@ -120,13 +114,13 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                               focusedBorder: const OutlineInputBorder(
                                 borderSide:
-                                BorderSide(color: AppTheme.blue2),
+                                BorderSide(color: AppTheme.blueIcon),
                               ),
                               errorText: snapshot.hasError
                                   ? snapshot.error.toString()
                                   : null,
                               labelStyle: const TextStyle(
-                                  color: AppTheme.blue2, fontSize: 15)),
+                                  color: AppTheme.blueIcon, fontSize: 15)),
                         ))),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
@@ -136,13 +130,11 @@ class _LoginPageState extends State<LoginPage> {
                       StreamBuilder(
                         stream: bloc.passStream,
                         builder: (context, snapshot) => TextField(
-                          cursorColor: AppTheme.blue2,
+                          cursorColor: AppTheme.blueIcon,
                           style: const TextStyle(
-                              fontSize: 18, color: AppTheme.blue2),
+                              fontSize: 18, color: AppTheme.blueIcon),
                           controller: _passController,
                           obscureText: !_showPass,
-                          //cho nay true thi giau pass, con failse thi ...
-                          //cho nay true thi giau pass
                           decoration: InputDecoration(
                               labelText: "PASSWORD",
                               border: const OutlineInputBorder(
@@ -150,13 +142,13 @@ class _LoginPageState extends State<LoginPage> {
                                 BorderSide(color: Colors.black),
                               ),
                               focusedBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(color: AppTheme.blue2),
+                                borderSide: BorderSide(color: AppTheme.blueIcon),
                               ),
                               errorText: snapshot.hasError
                                   ? snapshot.error.toString()
                                   : null,
                               labelStyle: const TextStyle(
-                                  color: AppTheme.blue2
+                                  color: AppTheme.blueIcon
                                   , fontSize: 15)),
                         ),
                       ),
@@ -179,7 +171,7 @@ class _LoginPageState extends State<LoginPage> {
                     height: 56,
                     child: ElevatedButton(
                         child: const Text('SIGN IN',
-                            style: TextStyle(color: AppTheme.blue2, fontWeight: FontWeight.bold)),
+                            style: TextStyle(color: AppTheme.blueIcon, fontWeight: FontWeight.bold)),
                         onPressed: login,
                         style: ButtonStyle(
                             backgroundColor:
@@ -196,7 +188,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const
                     Divider(
-                      color: AppTheme.blue2,
+                      color: AppTheme.blueIcon,
                       height: 0,
                       thickness: 1.5,
                       // indent: 5,
@@ -208,9 +200,9 @@ class _LoginPageState extends State<LoginPage> {
                     width: double.infinity,
                     height: 56,
                     child: ElevatedButton.icon(
-                      icon: const FaIcon(FontAwesomeIcons.google),
+                      icon: const FaIcon(FontAwesomeIcons.google, color: AppTheme.blueIcon,),
                         label: const Text('Sign Up With Google',
-                            style: TextStyle(color: AppTheme.blue2, fontWeight: FontWeight.bold)),
+                            style: TextStyle(color: AppTheme.blueIcon, fontWeight: FontWeight.bold)),
                         onPressed: (){
                         final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
                         provider.googleLogin();
@@ -251,7 +243,10 @@ class _LoginPageState extends State<LoginPage> {
                         'Don’t have a account?',
                         style: TextStyle(fontSize: 15, color: Colors.black54),
                       ),
-                      TextButton(onPressed: (){}, child: const Text('Register',style: TextStyle(fontSize: 15, color: AppTheme.blue2)))
+                      TextButton(onPressed: (){
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => RegisterPage()));
+                      }, child: const Text('Register',style: TextStyle(fontSize: 15, color: AppTheme.blueIcon)))
                     ],
                   ),
                 ),
@@ -271,11 +266,6 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  /*Widget gotoDocument(BuildContext context) {
-    return const DocumentPage();
-    //nay de test o local
-  }*/
-
   Widget gotoDashboard(BuildContext context) {
     return const FBTAppHomeScreen();
   }
@@ -286,20 +276,16 @@ class _LoginPageState extends State<LoginPage> {
       if (bloc.isValidUsername(_emailController.text) &&
           bloc.isValidPassword(_passController.text)) {
         var response = await http.post(
-            Uri.parse("https://reqres.in/api/login"),
-            body: ({
-              'email': _emailController.text,
-              'password': _passController.text
-            }));
+            Uri.parse("http://www.subcriptionmilk.somee.com/api/FirebaseServices/logincustomer?email="+"${_emailController.text}"+"&password="+"${_passController.text}"),
+            );
+        print(response.body.toString());
+        print(response.statusCode.toString());
         if (response.statusCode == 200) {
           final body = jsonDecode(response.body);
-          //print("Login token " + body.toString());
-          //ScaffoldMessenger.of(context)
-          //   .showSnackBar(SnackBar(content: Text("Token : ${body['access_token']}")));
           //Here , i store value or token inside shared preferences
-          //  //SharedPreferences pref = await SharedPreferences.getInstance();
-          //  //await pref.setString("login", body['access_token']);
-          //Navigator.push(context, MaterialPageRoute(builder: gotoDashboard));
+          SharedPreferences pref = await SharedPreferences.getInstance();
+          await pref.setString("uid", body['uidfb']);
+          await pref.setInt("id", body['iddb']);
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(builder: gotoDashboard), (route) => false);
         } else {

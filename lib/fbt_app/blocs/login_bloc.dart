@@ -7,11 +7,15 @@ import 'package:subscription_milk/fbt_app/validators/validation.dart';
 class LoginBloc {
   final StreamController _emailController = StreamController();
   final StreamController _passController = StreamController();
+  final StreamController _confirmController = StreamController();
+  final StreamController _nameController = StreamController();
 
   Stream get emailStream => _emailController.stream;
   // cu fap vjt tat
   Stream get passStream => _passController.stream;
   // k viet tat thi viet nhu under
+  Stream get confirmStream => _confirmController.stream;
+  Stream get nameStream => _nameController.stream;
 
   //Stream getUserStream(){
   // return _userController.stream;
@@ -41,5 +45,7 @@ class LoginBloc {
     // huy stream khi k dung toi
     _emailController.close();
     _passController.close();
+    _confirmController.close();
+    _nameController.close();
   }
 }
